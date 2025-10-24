@@ -85,7 +85,7 @@ while true; do
 done
 
 # Create timestamped branch
-VERSION_NAME="version-$(date +'%Y%m%d-%H%M%S')"
+VERSION_NAME="version-$(date +'%Y.%m.%d-at-%H.%M.%S')"
 print_status "Creating new branch: $VERSION_NAME"
 
 # Update main branch
