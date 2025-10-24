@@ -57,8 +57,7 @@ int main() {
 
     if (listen(server_fd, 5) == -1) { perror("listen"); exit(1); }
 
-    printf("Rule engine server listening on %s
-", SOCKET_PATH);
+    printf("Rule engine server listening on %s", SOCKET_PATH);
     while (1) {
         client_fd = accept(server_fd, NULL, NULL);
         if (client_fd == -1) { perror("accept"); continue; }
@@ -68,19 +67,16 @@ int main() {
             // parse
             char *sep = strchr(buf, '|');
             if (!sep) {
-                write(client_fd, "0
-", 2);
+                write(client_fd, "0", 2);
                 close(client_fd); continue;
             }
             *sep = ' ';
             char *type = buf;
             char *details = sep + 1;
             // strip newline
-            char *nl = strchr(details, '
-'); if (nl) *nl=' ';
+            char *nl = strchr(details, '\n'); if (nl) *nl=' ';
             int sev = evaluate(type, details);
-            char out[4]; snprintf(out, sizeof(out), "%d
-", sev);
+            char out[4]; snprintf(out, sizeof(out), "%d", sev);
             write(client_fd, out, strlen(out));
         }
         close(client_fd);
