@@ -14,8 +14,7 @@ class RuleClient:
         with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as s:
             s.settimeout(self.timeout)
             s.connect(self.socket_path)
-            payload = f"{event_type}|{details}
-"
+            payload = f"{event_type}|{details}"
             s.sendall(payload.encode('utf-8'))
             resp = s.recv(16).decode('utf-8').strip()
             try:
